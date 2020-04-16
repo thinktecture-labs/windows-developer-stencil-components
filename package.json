@@ -25,5 +25,7 @@
     "@stencil/core": "^1.12.2"
   },
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+    "@stencil/sass": "^1.3.1"
+  }
 }
