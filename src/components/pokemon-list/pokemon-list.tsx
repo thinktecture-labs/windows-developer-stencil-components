@@ -1,16 +1,5 @@
 import { Component, ComponentDidLoad, ComponentInterface, h, Host, Prop, State } from '@stencil/core';
-
-interface PokeApiResult<T> {
-  count: number;
-  next: string;
-  previous: string;
-  results: T[];
-}
-
-interface Pokemon {
-  name: string;
-  url: string;
-}
+import { PokeApiService, Pokemon } from './poke-api.service';
 
 @Component({
   tag: 'pokemon-list',
@@ -18,9 +7,9 @@ interface Pokemon {
   shadow: true,
 })
 export class PokemonList implements ComponentInterface, ComponentDidLoad {
-  private readonly pokeBaseUrl = 'https://pokeapi.co/api/v2/';
   private itemsPerPage = 10;
   private offset = 0;
+  private pokeApiService = new PokeApiService();
 
   @State() private pokemons: Pokemon[];
   @State() private pokemonCount: number;
@@ -35,9 +24,8 @@ export class PokemonList implements ComponentInterface, ComponentDidLoad {
   }
 
   private loadPage(): void {
-    fetch(`${this.pokeBaseUrl}pokemon?offset=${this.offset}&limit=${this.itemsPerPage}`)
-      .then(response => response.json())
-      .then((response: PokeApiResult<Pokemon>) => {
+    this.pokeApiService.loadPage(this.offset, this.itemsPerPage)
+      .then(response => {
         this.pokemons = response.results;
         this.pokemonCount = response.count;
       });
