@@ -19,7 +19,7 @@ interface Pokemon {
 })
 export class PokemonList implements ComponentInterface, ComponentDidLoad {
   private readonly pokeBaseUrl = 'https://pokeapi.co/api/v2/';
-  private itemsPerPage = 20;
+  private itemsPerPage = 10;
   private offset = 0;
 
   @State() private pokemons: Pokemon[];
@@ -35,7 +35,7 @@ export class PokemonList implements ComponentInterface, ComponentDidLoad {
   }
 
   private loadPage(): void {
-    fetch(`${this.pokeBaseUrl}pokemon?offset=${this.offset}&size=${this.itemsPerPage}`)
+    fetch(`${this.pokeBaseUrl}pokemon?offset=${this.offset}&limit=${this.itemsPerPage}`)
       .then(response => response.json())
       .then((response: PokeApiResult<Pokemon>) => {
         this.pokemons = response.results;
