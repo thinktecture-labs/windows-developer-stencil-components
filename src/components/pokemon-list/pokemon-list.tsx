@@ -22,10 +22,13 @@ export class PokemonList implements ComponentInterface, ComponentDidLoad {
   private itemsPerPage = 20;
   private offset = 0;
 
-  @Prop() listTitle = 'Pokémon List';
+  @State() private pokemons: Pokemon[];
+  @State() private pokemonCount: number;
 
-  @State() pokemons: Pokemon[];
-  @State() pokemonCount: number;
+  /**
+   * The title of this Pokémon List.
+   */
+  @Prop() listTitle = 'Pokémon List';
 
   componentDidLoad(): void {
     this.loadPage();

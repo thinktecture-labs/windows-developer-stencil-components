@@ -7,8 +7,17 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface ListPagination {
+        /**
+          * The count of all items in the list.
+         */
         "count": number;
+        /**
+          * How much items per page shall be shown in the list?
+         */
         "itemsPerPage": number;
+        /**
+          * The current offset of the list.
+         */
         "offset": number;
     }
     interface MyComponent {
@@ -26,6 +35,9 @@ export namespace Components {
         "middle": string;
     }
     interface PokemonList {
+        /**
+          * The title of this Pokémon List.
+         */
         "listTitle": string;
     }
 }
@@ -56,10 +68,25 @@ declare global {
 }
 declare namespace LocalJSX {
     interface ListPagination {
+        /**
+          * The count of all items in the list.
+         */
         "count"?: number;
+        /**
+          * How much items per page shall be shown in the list?
+         */
         "itemsPerPage"?: number;
+        /**
+          * The current offset of the list.
+         */
         "offset"?: number;
-        "onPaging"?: (event: CustomEvent<any>) => void;
+        /**
+          * Emits, when a paging is triggered.
+         */
+        "onPaging"?: (event: CustomEvent<{
+            offset: number;
+            itemsPerPage: number;
+        }>) => void;
     }
     interface MyComponent {
         /**
@@ -76,6 +103,9 @@ declare namespace LocalJSX {
         "middle"?: string;
     }
     interface PokemonList {
+        /**
+          * The title of this Pokémon List.
+         */
         "listTitle"?: string;
     }
     interface IntrinsicElements {

@@ -16,19 +16,33 @@ import {
   shadow: true,
 })
 export class ListPagination implements ComponentInterface, ComponentWillLoad {
+  @State() private totalPages: number;
+  @State() private currentPage: number;
+  @State() private previousPage: number | undefined;
+  @State() private nextPage: number | undefined;
+
+  /**
+   * The count of all items in the list.
+   */
   @Prop() count: number;
+
+  /**
+   * How much items per page shall be shown in the list?
+   */
   @Prop() itemsPerPage: number;
+
+  /**
+   * The current offset of the list.
+   */
   @Prop() offset: number;
 
-  @Event() paging: EventEmitter;
-
-  @State() totalPages: number;
-  @State() currentPage: number;
-  @State() previousPage: number | undefined;
-  @State() nextPage: number | undefined;
+  /**
+   * Emits, when a paging is triggered.
+   */
+  @Event() paging: EventEmitter<{ offset: number, itemsPerPage: number }>;
 
   private handleClick(offset: number): void {
-    this.paging.emit({ offset });
+    this.paging.emit({ offset, itemsPerPage: this.itemsPerPage });
     this.offset = offset;
     this.calculate();
   }
